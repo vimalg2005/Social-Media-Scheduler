@@ -16,6 +16,22 @@
 
 ---
 
+## 📸 Application Showcase
+
+### Cosmic Dark Dashboard
+![Dashboard Preview](docs/images/dashboard.png)
+
+### AI Content Composer
+![AI Composer Preview](docs/images/ai_composer.png)
+
+### Post Scheduling Queue
+![Scheduler Preview](docs/images/scheduler.png)
+
+### Premium Billing Plans
+![Billing Preview](docs/images/billing.png)
+
+---
+
 ## 🛠️ Technology Stack
 
 *   **Frontend**: React.js (v19), Vite (v8), TailwindCSS, Lucide Icons, React Hot Toast, Axios.
