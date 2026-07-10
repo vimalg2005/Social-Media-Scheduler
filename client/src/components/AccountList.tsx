@@ -1,4 +1,4 @@
-import { AlertCircleIcon, CheckCircleIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { PlusIcon, Trash2Icon } from "lucide-react";
 import { PLATFORMS } from "../assets/assets";
 
 interface AccountListProps {

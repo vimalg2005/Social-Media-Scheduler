@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { PLATFORMS } from "../assets/assets";
-import { ArrowRightIcon, CalendarDaysIcon, CalendarIcon, ClockIcon, SendIcon, XIcon } from "lucide-react";
+import { ArrowRightIcon, CalendarIcon, ClockIcon, XIcon } from "lucide-react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 

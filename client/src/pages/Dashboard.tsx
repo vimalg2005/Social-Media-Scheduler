@@ -1,4 +1,4 @@
-import { ActivityIcon, CheckCircleIcon, ClockIcon, SendIcon, Share2Icon, TrendingUpIcon, XIcon } from "lucide-react"
+import { ActivityIcon, CheckCircleIcon, ClockIcon, SendIcon, Share2Icon, XIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import api from "../api/axios"
 
