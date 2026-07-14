@@ -8,6 +8,7 @@ import accountRouter from "./routes/accountRoutes.js";
 import postRouter from "./routes/postRoutes.js";
 import activityRouter from "./routes/activityRoutes.js";
 import { initScheduler } from "./services/schedulerService.js";
+import { triggerCronPublish } from "./controllers/cronController.js";
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use(cors())
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
+
+app.get("/api/cron/publish", triggerCronPublish);
 
 app.get('/', (_req: Request, res: Response) => {
     res.send('Server is Live!');
@@ -39,6 +42,10 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction)=>{
     res.status(500).send(err?.response?.data?.message || err?.message)
 })
 
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+export default app;
+
+if (!process.env.VERCEL) {
+    app.listen(port, () => {
+        console.log(`Server is running at http://localhost:${port}`);
+    });
+}
