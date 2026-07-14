@@ -2,7 +2,7 @@
 
 This document summarizes the changes made to the **SocialAI** project, including:
 1.  **Home Page UI Redesign** (converting it to the premium Cosmic Dark theme).
-2.  **AWS EC2 Deployment Automation** (adding scripts for automated setup).
+3.  **Free-Tier Cloud Deployment Guides** (Render for backend, Vercel for frontend).
 
 ---
 
@@ -49,3 +49,12 @@ We have created an automated setup to easily host your app on AWS EC2 (Free-Tier
     
     pm2 restart social-scheduler-backend
     ```
+
+---
+
+## 🌐 Free-Tier Cloud Deployment (Render & Vercel)
+
+We have created dedicated step-by-step guides for free-tier deployments:
+
+1.  **[RENDER_DEPLOY.md](file:///c:/Users/vimal/OneDrive/Desktop/social-scheduler/RENDER_DEPLOY.md)**: Guides you through hosting your backend (Node.js/Express) on Render's free tier. Render is required for the backend because it supports continuous background execution (necessary for the post scheduler to run every minute).
+2.  **[VERCEL_DEPLOY.md](file:///c:/Users/vimal/OneDrive/Desktop/social-scheduler/VERCEL_DEPLOY.md)**: Guides you through hosting your React frontend on Vercel's high-speed CDN for free. Includes instructions on connecting Vercel to your Render backend via environment variables.
