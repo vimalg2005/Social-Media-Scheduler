@@ -1,47 +1,61 @@
-# ⚡ Deploying on Vercel (Important Serverless Info)
+# ⚡ Deploying on Vercel (100% Free Setup with Cron-job.org)
 
-You can absolutely deploy your project on **Vercel**! However, because Vercel is a **Serverless** platform, there is an important architectural limitation regarding the backend scheduler.
+You can deploy both your frontend and backend on Vercel for free! However, Vercel Hobby (Free) accounts restrict built-in cron jobs to **only once per day**. 
 
----
-
-## ⚠️ The Serverless Limitation (Why Render + Vercel is best)
-
-Your backend has an automated post scheduler (`server/services/schedulerService.ts`) powered by `node-cron` that runs **every minute** to check for and publish scheduled posts:
-```typescript
-cron.schedule("* * * * *", async () => { ... })
-```
-
-*   **Vercel** runs code as **Serverless Functions** (ephemeral containers that spin up to handle a request and immediately shut down). They **cannot** keep a background loop running. If you deploy the backend to Vercel, **your scheduled posts will never publish automatically**.
-*   **Render** runs as a **persistent background service**. The server stays online, meaning `node-cron` runs every minute without issues.
-
-### 💡 The Recommended Free Setup
-1.  **Backend (Render - Free)**: Host the Express server on Render (which supports background processes/cron).
-2.  **Frontend (Vercel - Free)**: Host the React static site on Vercel (which is ultra-fast and has a great free tier).
+To work around this, we use **Cron-job.org** (a free external service) to trigger our backend scheduler URL. This gives you a 100% free setup with cron execution running as often as every minute!
 
 ---
 
-## 🚀 How to Deploy the Frontend on Vercel
+## 🚀 How to Deploy the Backend (Express Server) on Vercel
 
-If you host your backend on Render (see [RENDER_DEPLOY.md](file:///c:/Users/vimal/OneDrive/Desktop/social-scheduler/RENDER_DEPLOY.md)), follow these steps to deploy the React frontend on Vercel:
-
-1.  Go to [Vercel.com](https://vercel.com/) and log in with your **GitHub** account.
-2.  Click **Add New > Project**.
-3.  Import your **Social-Media-Scheduler** repository.
-4.  Configure the project settings:
-    *   **Project Name**: `socialai-frontend`
-    *   **Framework Preset**: Select **Vite** (Vercel should auto-detect this).
-    *   **Root Directory**: Click Edit and select the **`client`** folder.
-5.  Click the **Environment Variables** dropdown and add:
-    *   **Key**: `VITE_API_BASE_URL`
-    *   **Value**: *Your Render backend URL* (e.g., `https://socialai-backend.onrender.com`)
-6.  Click **Deploy**.
-7.  Once deployed, Vercel will give you a live URL (e.g. `https://socialai.vercel.app`).
+1. Go to [Vercel.com](https://vercel.com/) and log in with your **GitHub** account.
+2. Click **Add New > Project** and import your **Social-Media-Scheduler** repository.
+3. Configure the settings:
+   * **Project Name**: `socialai-backend` (or any clean name)
+   * **Framework Preset**: Select **Other** or leave default.
+   * **Root Directory**: Click Edit and select the **`server`** folder.
+4. Click **Environment Variables** and add all your local variables:
+   * `MONGODB_URI`
+   * `JWT_SECRET`
+   * `ZERNIO_API_KEY`
+   * `GEMINI_API_KEY`
+   * `CLOUDINARY_CLOUD_NAME`
+   * `CLOUDINARY_API_KEY`
+   * `CLOUDINARY_API_SECRET`
+   * **`CRON_SECRET`** = (Enter a secure password/token of your choice, e.g. `mySuperSecretToken123`)
+5. Click **Deploy**.
+6. Copy the generated backend live URL (e.g. `https://socialai-backend.vercel.app`).
 
 ---
 
-## 🛠️ Alternative: Deploying Both on Vercel (Advanced)
+## ⏰ How to Set Up the Free Scheduler (Cron-job.org)
 
-If you want both frontend and backend on Vercel, you would need to:
-1.  Refactor the backend to expose a public endpoint (e.g. `GET /api/posts/cron-trigger`).
-2.  Use **Vercel Cron Jobs** (configured in `vercel.json`) to trigger that endpoint periodically.
-3.  *Note*: Vercel's Free Tier cron jobs can only run **once every 10 minutes** at most (compared to our current 1-minute interval), and serverless execution timeouts are capped at 10 seconds.
+To automatically publish posts at their scheduled times, configure an external cron job for free:
+
+1. Sign up for a free account at [Cron-job.org](https://cron-job.org/).
+2. In the dashboard, click **Create Cronjob**.
+3. Configure your cronjob:
+   * **Title**: `SocialAI Post Scheduler`
+   * **Address**: `https://<your-backend-vercel-url>/api/cron/publish` (e.g. `https://socialai-backend.vercel.app/api/cron/publish`)
+   * **Execution Schedule**: Select **Every 1 minute** (or **Every 5 minutes**).
+   * **Request Headers**: Under headers, add:
+     * **Key**: `Authorization`
+     * **Value**: `Bearer <your-CRON_SECRET>` (e.g. `Bearer mySuperSecretToken123` - must match the `CRON_SECRET` variable you saved in Vercel).
+4. Click **Create**.
+
+*That's it! Cron-job.org will now trigger your Vercel serverless function every minute, publishing all scheduled posts automatically.*
+
+---
+
+## 🎨 How to Deploy the Frontend (React Client) on Vercel
+
+1. In Vercel, go back to your main dashboard and click **Add New > Project**.
+2. Import your **Social-Media-Scheduler** repository again.
+3. Configure the settings:
+   * **Project Name**: `socialai`
+   * **Framework Preset**: **Vite** (auto-detected)
+   * **Root Directory**: Click Edit and select the **`client`** folder.
+4. Click **Environment Variables** and add:
+   * **Key**: `VITE_API_BASE_URL`
+   * **Value**: *Your Vercel Backend URL* (e.g. `https://socialai-backend.vercel.app`)
+5. Click **Deploy**.
