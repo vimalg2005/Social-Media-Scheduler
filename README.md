@@ -78,6 +78,31 @@ Ensure you have **Node.js** (v18+) and **npm** installed on your system.
 
 ---
 
+## 🌐 AWS EC2 Production Deployment
+
+This project includes a fully automated deployment script for **AWS EC2** (Ubuntu LTS instances) which sets up Nginx as a reverse proxy, installs Node.js v20 & PM2, compiles client/server code, and runs the application under a production process manager.
+
+### Automated EC2 Setup Instructions:
+1. **Launch EC2 Instance**: Launch an Ubuntu 24.04 LTS instance (`t2.micro` or `t3.micro` are AWS Free Tier eligible). In Security Groups, allow ports **22 (SSH)**, **80 (HTTP)**, and **443 (HTTPS)**.
+2. **SSH into the Instance** and clone your repository.
+3. **Run Deployment Script**:
+   ```bash
+   chmod +x scripts/deploy-ec2.sh
+   sudo ./scripts/deploy-ec2.sh
+   ```
+4. **Follow Prompts**: Input your Public IP (or Domain) and choose whether to configure SSL.
+5. **Add Environment Variables**:
+   ```bash
+   nano server/.env
+   ```
+   *Fill in your MongoDB URI, Gemini API key, and other variables, then save.*
+6. **Restart Backend**:
+   ```bash
+   pm2 restart social-scheduler-backend
+   ```
+
+---
+
 ## 🔒 Security Information
 **IMPORTANT**: Never commit `.env` configuration files to public repositories. All sensitive files (`.env`, `node_modules`, build artifacts) are ignored via `.gitignore` to prevent secret leaks and keep credentials secure.
 

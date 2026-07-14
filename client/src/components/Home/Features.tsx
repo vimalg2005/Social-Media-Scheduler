@@ -42,29 +42,29 @@ const features = [
 
 export default function Features() {
     return (
-        <section id="features" className="py-24 bg-slate-50">
+        <section id="features" className="py-24 bg-transparent">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="text-center mb-16">
                     <div className="mb-6 inline-flex items-center gap-1.5 bg-red-500/10 border border-red-500/15 text-red-500 text-[11px] font-medium tracking-[0.06em] uppercase px-3.5 py-1.5 rounded-full">
                         <ZapIcon className="size-3" />
                         Everything you need
                     </div>
-                    <h2 className="font-serif text-4xl sm:text-5xl font-medium leading-tight text-gray-900">
+                    <h2 className="font-serif text-4xl sm:text-5xl font-medium leading-tight text-white">
                         Automate your entire
                         <br />
-                        <span className="text-red-400 italic">social media workflow</span>
+                        <span className="text-gradient italic">social media workflow</span>
                     </h2>
-                    <p className="mt-5 text-gray-500 max-w-xl mx-auto leading-relaxed">From content creation to scheduling — Scheduler handles it all so you can focus on what matters most.</p>
+                    <p className="mt-5 text-slate-400 max-w-xl mx-auto leading-relaxed">From content creation to scheduling — SocialAI handles it all so you can focus on what matters most.</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {features.map((f) => (
-                        <div key={f.title} className="bg-white rounded-2xl border border-slate-100 p-6 hover:border-slate-200 hover:shadow-md hover:shadow-slate-100 group">
-                            <div className={`size-10 rounded-xl flex items-center justify-center mb-4 ${f.color}`}>
+                        <div key={f.title} className="glass-panel glass-panel-hover p-6 rounded-2xl group transition-all">
+                            <div className="size-10 rounded-xl flex items-center justify-center mb-4 bg-red-500/10 text-red-400 border border-red-500/20 shadow-xs group-hover:scale-105 transition-transform duration-200">
                                 <f.icon className="size-5" />
                             </div>
-                            <h3 className=" text-slate-900 mb-2">{f.title}</h3>
-                            <p className="text-sm text-slate-500/90 leading-relaxed">{f.description}</p>
+                            <h3 className="text-white font-semibold mb-2">{f.title}</h3>
+                            <p className="text-sm text-slate-400 leading-relaxed">{f.description}</p>
                         </div>
                     ))}
                 </div>
