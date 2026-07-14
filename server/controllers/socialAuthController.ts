@@ -79,7 +79,7 @@ export const syncAccounts = async (req: AuthRequest, res: Response) : Promise<vo
             const handle = (req.query.mockUsername as string) || "premium_user";
             const mockId = `mock_${platform}_${Date.now()}`;
             await Account.findOneAndUpdate(
-                { user: req.user._id, platform },
+                { user: req.user._id, platform } as any,
                 {
                     user: req.user._id,
                     platform,
@@ -87,8 +87,8 @@ export const syncAccounts = async (req: AuthRequest, res: Response) : Promise<vo
                     zernioAccountId: mockId,
                     status: "connected",
                     avatarUrl: `https://api.dicebear.com/7.x/identicon/svg?seed=${handle}`
-                },
-                { upsert: true }
+                } as any,
+                { upsert: true } as any
             );
         }
 
